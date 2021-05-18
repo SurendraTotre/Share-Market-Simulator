@@ -35,7 +35,25 @@ def home():
 
         details.append(value)
 
-        initialize()
+    url = "https://www.moneycontrol.com/markets/indian-indices/"
+    r = requests.get(url)
+    html = r.text
+    soup = BeautifulSoup(html, 'html.parser')
+
+    sensex = soup.find("span", id="indcur").get_text()
+    details.append(sensex)
+
+
+
+    url = "https://www.moneycontrol.com/markets/indian-indices/top-nse-50-companies-list/9?classic=true"
+    r = requests.get(url)
+    html = r.text
+    soup = BeautifulSoup(html, 'html.parser')
+
+    nifty = soup.find('span', id='indcur').get_text()
+    details.append(nifty)
+
+    initialize()
 
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -86,20 +104,20 @@ def Search():
     elif search_term == "sb":
         return redirect('/SBI')
     elif search_term == "zee":
-        return redirect('/Zee')
+        return redirect('/Zee Media')
     elif search_term == "as":
-        return redirect('/Ashok_leyland')
+        return redirect('/Ashok Leyland')
     elif search_term == "te":
-        return redirect('/Tech_Mahindra')
+        return redirect('/Tech Mahindra')
 
 
 @app.route("/Reliance")
 def Reliance():
-    from matplotlib import pyplot as plt2
-    plt2.switch_backend('agg')
+    from matplotlib import pyplot as plt
+    plt.switch_backend('agg')
     global page_name
     page_name = 'Reliance'
-    plt2.xkcd()
+    plt.xkcd()
 
     reliance = Reliance_Company.RelianceComp()
     reliance.scrap_data()
@@ -113,18 +131,19 @@ def Reliance():
     value = [item for t in value for item in t]
     
     try:
-        plt2.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
+        plt.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
     except ValueError:
         print('Value Error')
     
-    plt2.ylabel('Share Value')
-    plt2.title('Share Value Trend Of Reliance Company')
-    plt2.tight_layout()
-    plt2.grid(False)
-    ax = plt2.gca()
+    plt.ylabel('Share Value')
+    plt.title('Share Value Trend Of Reliance Company')
+    plt.tight_layout()
+    plt.grid(False)
+    ax = plt.gca()
     ax.set_facecolor('xkcd:navy')
-    ax.axes.xaxis.set_ticks([])
-    plt2.savefig('D:\Python\Flask_College_Project\share_market\static\images\Reliancegraph.png')
+    plt.xticks(rotation=60)
+    # ax.axes.xaxis.set_ticks([])
+    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\Reliancegraph.png', bbox_inches = "tight")
     image_file = url_for('static', filename='images/Reliancegraph.png')
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -168,8 +187,9 @@ def TCS():
     plt.grid(False)
     ax = plt.gca()
     ax.set_facecolor('xkcd:navy')
-    ax.axes.xaxis.set_ticks([])
-    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\TCSgraph.png')
+    plt.xticks(rotation=60)
+    # ax.axes.xaxis.set_ticks([])
+    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\TCSgraph.png', bbox_inches = "tight")
     image_file = url_for('static', filename='images/TCSgraph.png')
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -186,11 +206,11 @@ def TCS():
 
 @app.route("/Infosys")
 def Infosys():
-    from matplotlib import pyplot as plt4
-    plt4.switch_backend('agg')
+    from matplotlib import pyplot as plt
+    plt.switch_backend('agg')
     global page_name
     page_name = 'Infosys'
-    plt4.xkcd()
+    plt.xkcd()
 
     infosys = Infosys_Company.InfosysComp()
     infosys.scrap_data()
@@ -204,17 +224,18 @@ def Infosys():
     value = [item for t in value for item in t]
 
     try:
-        plt4.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
+        plt.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
     except ValueError:
         print('Value Error')
-    plt4.ylabel('Share Value')
-    plt4.title('Share Value Trend Of Infosys Company')
-    plt4.tight_layout()
-    plt4.grid(False)
-    ax = plt4.gca()
+    plt.ylabel('Share Value')
+    plt.title('Share Value Trend Of Infosys Company')
+    plt.tight_layout()
+    plt.grid(False)
+    ax = plt.gca()
     ax.set_facecolor('xkcd:navy')
-    ax.axes.xaxis.set_ticks([])   
-    plt4.savefig('D:\Python\Flask_College_Project\share_market\static\images\Infosysgraph.png')
+    plt.xticks(rotation=60)
+    # ax.axes.xaxis.set_ticks([])  
+    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\Infosysgraph.png', bbox_inches = "tight")
     image_file = url_for('static', filename='images/Infosysgraph.png')
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -231,11 +252,11 @@ def Infosys():
 
 @app.route("/Wipro")
 def Wipro():
-    from matplotlib import pyplot as plt3
-    plt3.switch_backend('agg')
+    from matplotlib import pyplot as plt
+    plt.switch_backend('agg')
     global page_name
     page_name = 'Wipro'
-    plt3.xkcd()
+    plt.xkcd()
 
     wipro = Wipro_Company.WiproComp()
     wipro.scrap_data()
@@ -249,18 +270,19 @@ def Wipro():
     value = [item for t in value for item in t]
 
     try:
-        plt3.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
+        plt.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
     except ValueError:
         print('Value Error')
         
-    plt3.ylabel('Share Value')
-    plt3.title('Share Value Trend Of Wipro Company')
-    plt3.tight_layout()
-    plt3.grid(False)
-    ax = plt3.gca()
+    plt.ylabel('Share Value')
+    plt.title('Share Value Trend Of Wipro Company')
+    plt.tight_layout()
+    plt.grid(False)
+    ax = plt.gca()
     ax.set_facecolor('xkcd:navy')
-    ax.axes.xaxis.set_ticks([])
-    plt3.savefig('D:\Python\Flask_College_Project\share_market\static\images\Wiprograph.png')
+    plt.xticks(rotation=60)
+    # ax.axes.xaxis.set_ticks([])
+    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\Wiprograph.png', bbox_inches = "tight")
     image_file = url_for('static', filename='images/Wiprograph.png')
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -277,11 +299,11 @@ def Wipro():
 
 @app.route("/L&T")
 def LandT():
-    from matplotlib import pyplot as plt4
-    plt4.switch_backend('agg')
+    from matplotlib import pyplot as plt
+    plt.switch_backend('agg')
     global page_name
     page_name = 'L&T'
-    plt4.xkcd()
+    plt.xkcd()
 
     LandT = LandT_Company.LandTComp()
     LandT.scrap_data()
@@ -295,17 +317,18 @@ def LandT():
     value = [item for t in value for item in t]
 
     try:
-        plt4.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
+        plt.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
     except ValueError:
         print('Value Error')
-    plt4.ylabel('Share Value')
-    plt4.title('Share Value Trend Of L&T Company')
-    plt4.tight_layout()
-    plt4.grid(False)
-    ax = plt4.gca()
+    plt.ylabel('Share Value')
+    plt.title('Share Value Trend Of L&T Company')
+    plt.tight_layout()
+    plt.grid(False)
+    ax = plt.gca()
     ax.set_facecolor('xkcd:navy')
-    ax.axes.xaxis.set_ticks([])   
-    plt4.savefig('D:\Python\Flask_College_Project\share_market\static\images\L&Tgraph.png')
+    plt.xticks(rotation=60)
+    # ax.axes.xaxis.set_ticks([])   
+    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\L&Tgraph.png', bbox_inches = "tight")
     image_file = url_for('static', filename='images/L&Tgraph.png')
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -322,11 +345,11 @@ def LandT():
 
 @app.route("/HDFC")
 def HDFC():
-    from matplotlib import pyplot as plt4
-    plt4.switch_backend('agg')
+    from matplotlib import pyplot as plt
+    plt.switch_backend('agg')
     global page_name
     page_name = 'HDFC'
-    plt4.xkcd()
+    plt.xkcd()
 
     HDFC = HDFC_Company.HDFCComp()
     HDFC.scrap_data()
@@ -340,17 +363,18 @@ def HDFC():
     value = [item for t in value for item in t]
 
     try:
-        plt4.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
+        plt.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
     except ValueError:
         print('Value Error')
-    plt4.ylabel('Share Value')
-    plt4.title('Share Value Trend Of HDFC Company')
-    plt4.tight_layout()
-    plt4.grid(False)
-    ax = plt4.gca()
+    plt.ylabel('Share Value')
+    plt.title('Share Value Trend Of HDFC Company')
+    plt.tight_layout()
+    plt.grid(False)
+    ax = plt.gca()
     ax.set_facecolor('xkcd:navy')
-    ax.axes.xaxis.set_ticks([])   
-    plt4.savefig('D:\Python\Flask_College_Project\share_market\static\images\HDFCgraph.png')
+    plt.xticks(rotation=60)
+    # ax.axes.xaxis.set_ticks([])   
+    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\HDFCgraph.png', bbox_inches = "tight")
     image_file = url_for('static', filename='images/HDFCgraph.png')
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -368,11 +392,11 @@ def HDFC():
 
 @app.route("/SBI")
 def SBI():
-    from matplotlib import pyplot as plt4
-    plt4.switch_backend('agg')
+    from matplotlib import pyplot as plt
+    plt.switch_backend('agg')
     global page_name
     page_name = 'SBI'
-    plt4.xkcd()
+    plt.xkcd()
 
     SBI = SBI_Company.SBIComp()
     SBI.scrap_data()
@@ -386,17 +410,18 @@ def SBI():
     value = [item for t in value for item in t]
 
     try:
-        plt4.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
+        plt.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
     except ValueError:
         print('Value Error')
-    plt4.ylabel('Share Value')
-    plt4.title('Share Value Trend Of SBI Company')
-    plt4.tight_layout()
-    plt4.grid(False)
-    ax = plt4.gca()
+    plt.ylabel('Share Value')
+    plt.title('Share Value Trend Of SBI Company')
+    plt.tight_layout()
+    plt.grid(False)
+    ax = plt.gca()
     ax.set_facecolor('xkcd:navy')
-    ax.axes.xaxis.set_ticks([])   
-    plt4.savefig('D:\Python\Flask_College_Project\share_market\static\images\SBIgraph.png')
+    plt.xticks(rotation=60)
+    # ax.axes.xaxis.set_ticks([])  
+    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\SBIgraph.png', bbox_inches = "tight")
     image_file = url_for('static', filename='images/SBIgraph.png')
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -413,11 +438,11 @@ def SBI():
 
 @app.route("/Zee Media")
 def Zee_Media():
-    from matplotlib import pyplot as plt4
-    plt4.switch_backend('agg')
+    from matplotlib import pyplot as plt
+    plt.switch_backend('agg')
     global page_name
     page_name = 'Zee Media'
-    plt4.xkcd()
+    plt.xkcd()
 
     Zee_Media = Zee_Media_Company.Zee_MediaComp()
     Zee_Media.scrap_data()
@@ -431,17 +456,18 @@ def Zee_Media():
     value = [item for t in value for item in t]
 
     try:
-        plt4.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
+        plt.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
     except ValueError:
         print('Value Error')
-    plt4.ylabel('Share Value')
-    plt4.title('Share Value Trend Of Zee Media Company')
-    plt4.tight_layout()
-    plt4.grid(False)
-    ax = plt4.gca()
+    plt.ylabel('Share Value')
+    plt.title('Share Value Trend Of Zee Media Company')
+    plt.tight_layout()
+    plt.grid(False)
+    ax = plt.gca()
     ax.set_facecolor('xkcd:navy')
-    ax.axes.xaxis.set_ticks([])   
-    plt4.savefig('D:\Python\Flask_College_Project\share_market\static\images\Zee_Mediagraph.png')
+    plt.xticks(rotation=60)
+    # ax.axes.xaxis.set_ticks([])  
+    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\Zee_Mediagraph.png', bbox_inches = "tight")
     image_file = url_for('static', filename='images/Zee_Mediagraph.png')
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -459,11 +485,11 @@ def Zee_Media():
 
 @app.route("/Ashok Leyland")
 def Ashok_Leyland():
-    from matplotlib import pyplot as plt4
-    plt4.switch_backend('agg')
+    from matplotlib import pyplot as plt
+    plt.switch_backend('agg')
     global page_name
     page_name = 'Ashok Leyland'
-    plt4.xkcd()
+    plt.xkcd()
 
     Ashok_Leyland = Ashok_Leyland_Company.Ashok_LeylandComp()
     Ashok_Leyland.scrap_data()
@@ -477,17 +503,18 @@ def Ashok_Leyland():
     value = [item for t in value for item in t]
 
     try:
-        plt4.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
+        plt.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
     except ValueError:
         print('Value Error')
-    plt4.ylabel('Share Value')
-    plt4.title('Share Value Trend Of Ashok Leyland Company')
-    plt4.tight_layout()
-    plt4.grid(False)
-    ax = plt4.gca()
+    plt.ylabel('Share Value')
+    plt.title('Share Value Trend Of Ashok Leyland Company')
+    plt.tight_layout()
+    plt.grid(False)
+    ax = plt.gca()
     ax.set_facecolor('xkcd:navy')
-    ax.axes.xaxis.set_ticks([])   
-    plt4.savefig('D:\Python\Flask_College_Project\share_market\static\images\Ashok_Leylandgraph.png')
+    plt.xticks(rotation=60)
+    # ax.axes.xaxis.set_ticks([])  
+    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\Ashok_Leylandgraph.png', bbox_inches = "tight")
     image_file = url_for('static', filename='images/Ashok_Leylandgraph.png')
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -504,11 +531,11 @@ def Ashok_Leyland():
 
 @app.route("/Tech Mahindra")
 def Tech_Mahindra():
-    from matplotlib import pyplot as plt4
-    plt4.switch_backend('agg')
+    from matplotlib import pyplot as plt
+    plt.switch_backend('agg')
     global page_name
     page_name = 'Tech Mahindra'
-    plt4.xkcd()
+    plt.xkcd()
 
     Tech_Mahindra = Tech_Mahindra_Company.Tech_MahindraComp()
     Tech_Mahindra.scrap_data()
@@ -522,17 +549,18 @@ def Tech_Mahindra():
     value = [item for t in value for item in t]
 
     try:
-        plt4.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
+        plt.plot(time_line, value, color='white', linewidth=1, label='Share Value Trend')
     except ValueError:
         print('Value Error')
-    plt4.ylabel('Share Value')
-    plt4.title('Share Value Trend Of Tech Mahindra Company')
-    plt4.tight_layout()
-    plt4.grid(False)
-    ax = plt4.gca()
+    plt.ylabel('Share Value')
+    plt.title('Share Value Trend Of Tech Mahindra Company')
+    plt.tight_layout()
+    plt.grid(False)
+    ax = plt.gca()
     ax.set_facecolor('xkcd:navy')
-    ax.axes.xaxis.set_ticks([])   
-    plt4.savefig('D:\Python\Flask_College_Project\share_market\static\images\Tech_Mahindragraph.png')
+    plt.xticks(rotation=60)
+    # ax.axes.xaxis.set_ticks([])   
+    plt.savefig('D:\Python\Flask_College_Project\share_market\static\images\Tech_Mahindragraph.png', bbox_inches = "tight")
     image_file = url_for('static', filename='images/Tech_Mahindragraph.png')
     image_file1 = url_for('static', filename='images/reliance industries.png')
     image_file2 = url_for('static', filename='images/TCS.png')
@@ -552,6 +580,8 @@ def buy_calcn():
     if request.method == 'POST':
         quantity = int(request.form.get('quantity'))
         price_now = float(request.form.get('current_price'))
+        print(quantity)
+        print(price_now)
         totalprice = float(quantity) * price_now
         
         transaction_1 = Transaction(companyname=page_name, typetransact='Buy', quantity=quantity, pricebought=price_now, totalprice=totalprice)
@@ -596,9 +626,13 @@ def sell_calcn():
         totalprice = float(quantity) * price_now
 
         record = Portfolio.query.filter_by(companyname=page_name).first()
-        available_quantity = record.quantity
+        
+        if record == None:
+            available_quantity = 0
+        else:
+            available_quantity = record.quantity
 
-        if quantity <= available_quantity:
+        if (available_quantity != 0) and (quantity <= available_quantity):
             transaction_1 = Transaction(companyname=page_name, typetransact='Sell', quantity=quantity, pricebought=price_now, totalprice=totalprice)
 
             db.session.add(transaction_1)
@@ -608,7 +642,7 @@ def sell_calcn():
                 pass
             else:
                 portfolio = Portfolio.query.filter_by(companyname=page_name).first()
-                quantity = portfolio.quantity + quantity
+                quantity = portfolio.quantity - quantity
                 totalprice = quantity * price_now
                 db.session.delete(portfolio)
                 db.session.commit()
